@@ -2,15 +2,15 @@ const express = require("express");
 const router = express.Router();
 const Journal = require("../models/journal");
 
-router.get("/entries", (req, res, next) => {
+router.get("/journal", (req, res, next) => {
   //this will return all the data, exposing only the id and action field to the client
-  Journal.find({}, "action")
+  Journal.find({}, {})
     .then(data => res.json(data))
     .catch(next);
 });
 
 router.post("/journal", (req, res, next) => {
-  if (req.body.action) {
+  if (req.body.title) {
     Journal.create(req.body)
       .then(data => res.json(data))
       .catch(next);
