@@ -13,6 +13,15 @@ const JournalSchema = new Schema({
   }
 });
 
+JournalSchema.methods.toJSON = function() {
+  return {
+    _id: this._id,
+    title: this.title,
+    entry: this.entry,
+    createdAt: this.createdAt
+  };
+};
+
 //create model for todo
 const Journal = mongoose.model("journal", JournalSchema);
 

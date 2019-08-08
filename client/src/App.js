@@ -23,7 +23,7 @@ function App() {
     //   </header>
     // </div>
 
-    <div>
+    <div style={{ textAlign: "center", paddingTop: "50px" }}>
       <Input />
     </div>
   );
