@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 import Input from "./components/Input";
@@ -23,7 +22,7 @@ function App() {
     //   </header>
     // </div>
 
-    <div style={{ textAlign: "center", paddingTop: "50px" }}>
+    <div className="App">
       <Input />
     </div>
   );

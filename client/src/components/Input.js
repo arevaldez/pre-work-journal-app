@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography, Container } from "@material-ui/core";
+import "./styles.css";
 
 class Input extends Component {
   state = {
@@ -9,7 +10,7 @@ class Input extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:5000/api/journal", {
+    fetch("http://localhost:5000/api/", {
       method: "GET"
     })
       .then(r => r.json())
@@ -39,7 +40,7 @@ class Input extends Component {
     // alert(journal.title);
     if (journal.title && journal.entry.length > 0) {
       console.log("in fetch");
-      fetch("http://localhost:5000/api/journal", {
+      fetch("http://localhost:5000/api/add", {
         headers: {
           "Content-Type": "application/json"
         },
@@ -69,19 +70,12 @@ class Input extends Component {
   render() {
     const { title, entry } = this.state;
     return (
-      <div>
-        <div
-          style={{
-            // textAlign: "center",
-            paddingTop: "50px",
-            display: "flex",
-            flexDirection: "column",
-            width: "400px"
-            // justifyContent: "center",
-            // alignItems: "center"
-          }}
-        >
+      <div className="flex-container">
+        {/* <Container maxWidth="sm"> */}
+        <div className="input-containter">
           <input
+            className="input"
+            border="none"
             value={title}
             name="title"
             type="text"
@@ -89,24 +83,28 @@ class Input extends Component {
             placeholder="Journal Entry Title"
           />
           <textarea
+            className="entry"
             onChange={e => this.handleChange("entry", e)}
             placeholder="Journal Entry"
             value={entry}
           />
-          <button onClick={this.addEntry}>Submit</button>
+          <button className="btn" onClick={this.addEntry}>
+            Submit
+          </button>
         </div>
-        <div>
-          {this.state.cards.map(res => {
-            return (
-              <Card>
-                <CardContent>
-                  <Typography>{res[0]}</Typography>
-                  <Typography>{res[1]}</Typography>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+
+        {this.state.cards.map(res => {
+          return (
+            <Card>
+              <CardContent>
+                <Typography>{res[0]}</Typography>
+                <Typography>{res[1]}</Typography>
+              </CardContent>
+            </Card>
+          );
+        })}
+
+        {/* </Container> */}
       </div>
     );
   }
