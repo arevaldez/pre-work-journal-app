@@ -1,30 +1,66 @@
+// api.js
+
 const express = require("express");
 const router = express.Router();
+
+// Require Journal model
 const Journal = require("../models/journal");
 
-router.get("/journal", (req, res, next) => {
-  //this will return all the data, exposing only the id and action field to the client
-  Journal.find({}, {})
-    .then(data => res.json(data))
-    .catch(next);
-});
+// Define add route (CREATE)
+router.route("/add").post(function(req, res) {
+  let journal = new Journal(req.body);
 
-router.post("/journal", (req, res, next) => {
-  if (req.body.title) {
-    Journal.create(req.body)
-      .then(data => res.json(data))
-      .catch(next);
-  } else {
-    res.json({
-      error: "The input field is empty"
+  journal
+    .save()
+    .then(business => {
+      res.status(200).json("Added journal entry successfully");
+    })
+    .catch(err => {
+      res.status(400).send("Unable to save entry to db");
     });
-  }
 });
 
-router.delete("/journal/:id", (req, res, next) => {
-  Journal.findOneAndDelete({ _id: req.params.id })
-    .then(data => res.json(data))
-    .catch(next);
+// Define get route (READ)
+router.route("/").get(function(req, res) {
+  Journal.find(function(err, entries) {
+    if (err) {
+      cosnole.log(err);
+    } else {
+      res.json(entries);
+    }
+  });
+});
+
+//define edit (UPDATE)
+router.route("/update/:id").post(function(req, res) {
+  Journal.findById(req.params.id, function(err, entry) {
+    if (!entry) {
+      res.status(404).send("Entry not found or doesn't exist.");
+    } else {
+      entry.title = req.body.title;
+      entry.entry = req.body.entry;
+
+      entry
+        .save()
+        .then(entry => {
+          res.json("Update complete");
+        })
+        .catch(err => {
+          res.status(400).send("Unable to update the database, ", err);
+        });
+    }
+  });
+});
+
+// Define delete (DELETE)
+router.route("/delete/:id").get(function(req, res) {
+  Journal.findByIdAndRemove({ _id: req.params.id }, function(err, entry) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json("Successfully Removed");
+    }
+  });
 });
 
 module.exports = router;
