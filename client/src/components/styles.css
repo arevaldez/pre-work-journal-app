@@ -1,38 +1,107 @@
-.flex-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+
+.container {
+  font-family: "Roboto", sans-serif;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: -50px;
 }
 
-.input-containter {
+.form {
   display: flex;
-  margin: 0 auto;
   flex-direction: column;
-  width: 70%;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .input {
-  border: 1px solid #f0f2f5;
+  border: 1px solid white;
   border-radius: 5px;
-  height: 50px;
-  margin-bottom: 1%;
+  width: 30%;
+  height: 1.8rem;
+  font-size: 16px;
 }
 
 .entry {
-  margin-bottom: 1%;
-}
-
-/* .input-containter,
-input {
-  width: 20rem;
-  height: 40px;
-} */
-
-/* .input-containter,
-textarea {
-  width: 30rem;
+  border: 1px solid white;
+  border-radius: 5px;
+  height: 5rem;
+  font-size: 15px;
 }
 
 .btn {
-  width: 30%;
+  margin-top: 50px;
+  margin-bottom: 80px;
+  width: 140px;
+  height: 45px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn:hover {
+  background-color: #88bbff;
+  box-shadow: 0px 15px 20px rgba(82, 160, 248, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.Title {
+  font-size: 80px;
+  margin-bottom: -30px;
+}
+
+.Description {
+  font-size: 30px;
+}
+
+.card {
+  border: none;
+  background-color: white;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.card-title {
+  font-size: 20px;
+
+  position: sticky;
+  height: 30px;
+  top: 0;
+  margin-top: 0;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.card-entry {
+  font-size: 15px;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.card .delete {
+  color: #88bbff;
+  /* padding-top: 100%; */
+}
+
+.Header {
+  background-color: rgb(237, 243, 245);
+  display: flex;
+  justify-content: center;
+}
+/* 
+.delete {
+  align-item
 } */
