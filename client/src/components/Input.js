@@ -1,14 +1,30 @@
 import React, { Component } from "react";
 import {
   Grid,
-  Card,
-  CardContent,
-  Typography,
-  Container,
-  Button
+  // Card,
+  // CardContent,
+  // Typography,
+  Container
+  // Button
 } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import "./styles.css";
 import DeleteIcon from "@material-ui/icons/Delete";
+
+// const useStyles = makeStyles({
+//   card: {
+//     maxWidth: 345,
+//     maxHeight: 200,
+//     overflowY: "scroll"
+//   }
+// });
 
 class Input extends Component {
   state = {
@@ -18,6 +34,10 @@ class Input extends Component {
   };
 
   componentDidMount() {
+    this.getCards();
+  }
+
+  getCards = () => {
     fetch("http://localhost:5000/api/", {
       method: "GET"
     })
@@ -26,8 +46,7 @@ class Input extends Component {
         res.map(r => {
           let a = [...this.state.cards];
 
-          // console.log(r);
-          a.push([r.title, r.entry]);
+          a.push([r._id, r.title, r.entry]);
 
           this.setState({
             cards: a
@@ -36,7 +55,7 @@ class Input extends Component {
 
         console.log("Cards", this.state.cards);
       });
-  }
+  };
 
   addEntry = () => {
     let journal = { title: this.state.title, entry: this.state.entry };
@@ -60,13 +79,23 @@ class Input extends Component {
           console.log(r);
           this.setState({
             title: "",
-            entry: ""
+            entry: "",
+            cards: []
           });
+        })
+        .then(() => {
+          this.getCards();
         })
         .catch(err => console.log(err));
     } else {
       console.log("Missing input");
     }
+  };
+
+  deleteJournal = id => {
+    fetch(`http://localhost:5000/api/delete/${id}`)
+      .then(r => r.json())
+      .then(resp => console.log(resp));
   };
 
   handleChange = (key, event) => {
@@ -98,28 +127,28 @@ class Input extends Component {
             value={entry}
           />
 
-          <button className="btn" onClick={this.addEntry}>
+          <button className="btn" onClick={() => this.addEntry()}>
             Submit
           </button>
-
-          {/* <div className="card"> */}
-          <Grid container spacing={3}>
+          <Grid container spacing={9}>
             {this.state.cards.map(res => {
               return (
                 <Grid item xs={6}>
                   <div className="card">
-                    <div>
-                      <div className="Header">
-                        <p className="card-title">{res[0]}</p>
-                        <DeleteIcon className="delete" />
+                    <div className="card-inner">
+                      <div className="card-header">{res[1]}</div>
+                      <div className="card-body">{res[2]}</div>
+                      <div className="card-footer">
+                        <DeleteIcon
+                          onClick={() => this.deleteJournal(res[0])}
+                          className="delete"
+                        />
                       </div>
-                      <p className="card-entry">{res[1]}</p>
                     </div>
                   </div>
                 </Grid>
               );
             })}
-            {/* </div> */}
           </Grid>
         </div>
       </div>
